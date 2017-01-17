@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h2>You are in room: <span id="room">{{room}}</span></h2>
+
+  <p>Logged in as <span id="user">{{user}}</span></p>
+
+  <a href="{{ url_for('dashboard') }}">Return to dashboard</a>
+
+  <!-- populate with message history from json file -->
+  <br>
+  <br>
+  <h2>Message History</h2>
+  <br>
+  <table>
+  	<tbody id="msgs">
+  	</tbody>
+  </table>
+
+ <script>
+  	//parse json file and add to table
+  	var decode_history = {{history|safe}};
+  	if (decode_history.length != 0){
+  		var messages = decode_history;
+  		for (var i=0; i<messages.length; i++) {
+  			var message = messages[i];
+  			var id = message.id;
+  			var user = message.user;
+  			var msg = message.text;
+  			//add row to table
+			var table = document.getElementById("msgs");
+			var row = document.createElement('tr');
+			table.appendChild(row);
+
+			//add sender to row
+			var sender = document.createElement('td');
+			sender.innerHTML = user + ": ";
+			row.appendChild(sender);
+
+			//add message to row
+			var text = document.createElement('td');
+			text.innerHTML = msg;
+			row.appendChild(text);
+
+			//add id to row
+			var num = document.createElement('td');
+			num.innerHTML = id;
+			num.style.visibility = "hidden";
+			row.appendChild(num);
+  		}
+  	}
+ </script>
+
+  <!-- text area that calls send message method -->
+  <br>
+  <form name="message">
+ 	<input type="textarea" id="msg" name="msg" value="" />
+  	<input type="button" id="submit" value="Send Message" />
+  </form>
+
+  <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+
+{% endblock %}

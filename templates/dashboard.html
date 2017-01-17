@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Chat App Dashboard</h2>
+
+  <p>Logged in as {{user}}</p>
+
+  <a href="{{ url_for('new_room') }}">Create a new chat room</a>
+
+ <h3>Chat Rooms</h3>
+ {% for room in rooms %}
+  <a href="{{ url_for('chat_room', room=room.name) }}">{{room.name}}</a><br>
+ {% else %}
+  <p>No chat rooms currently exist</p>
+ {% endfor %}
+
+{% endblock %}

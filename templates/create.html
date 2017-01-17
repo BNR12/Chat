@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Create new Chat App account</h2>
+ {% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
+
+ {% if msg %}
+ <p class="error"> {{ msg }} </p>
+ <a href="{{ url_for('login') }}">Return to Login</a>
+ {% endif %}
+ 
+  <form action="{{ url_for('new_account') }}" method="post">
+    <dl>
+      <dt>Username:
+      <dd><input type="text" name="username">
+      <dt>Password:
+      <dd><input type="password" name="password">
+      <dd><input type="submit" value="Submit">
+    </dl>
+  </form>
+
+{% endblock %}
